@@ -344,6 +344,15 @@ String[][] categorySections = {mainSections};
 					return false;
 				}
 
+				<%
+				if (selLayout.isRootLayout()) {
+					redirectURL.setParameter("historyKey","lookAndFeel");
+				}
+				else {
+					redirectURL.setParameter("historyKey","details");
+				}
+				%>
+
 				<c:if test="<%= layoutRevision == null || incomplete %>">
 					document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
 				</c:if>
