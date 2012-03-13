@@ -36,6 +36,13 @@ boolean privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLa
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_pages.jsp-portletURL");
 PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redirectURL");
 
+if (selLayout.isRootLayout()) {
+	redirectURL.setParameter("historyKey","lookAndFeel");
+}
+else {
+	redirectURL.setParameter("historyKey","details");
+}
+
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
 
 Set<Long> parentPlids = new HashSet<Long>();
@@ -343,15 +350,6 @@ String[][] categorySections = {mainSections};
 				if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
 					return false;
 				}
-
-				<%
-				if (selLayout.isRootLayout()) {
-					redirectURL.setParameter("historyKey","lookAndFeel");
-				}
-				else {
-					redirectURL.setParameter("historyKey","details");
-				}
-				%>
 
 				<c:if test="<%= layoutRevision == null || incomplete %>">
 					document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>';
