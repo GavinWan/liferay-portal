@@ -392,7 +392,7 @@ if (category != null) {
 		%>
 
 	</c:when>
-	<c:when test='<%= tabs1.equals("recent-posts") || tabs1.equals("recent-posts-in-current-category")%>'>
+	<c:when test='<%= tabs1.equals("recent-posts") || tabs1.equals("recent-posts-in-current-category") %>'>
 
 		<%
 		String emptyResultsMessage = null;
@@ -441,7 +441,7 @@ if (category != null) {
 						results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, currentCategoryId, WorkflowConstants.STATUS_APPROVED, false, false, searchContainer.getStart(), searchContainer.getEnd());
 						total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, currentCategoryId, WorkflowConstants.STATUS_APPROVED, false, false);
 					}
-	
+
 					pageContext.setAttribute("results", results);
 					pageContext.setAttribute("total", total);
 					%>

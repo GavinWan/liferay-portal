@@ -49,12 +49,12 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 
 			<% if(category != null) { %>
 				<li class="top-link">
-	
+
 					<%
 					portletURL.setParameter("topLink", "recent-posts-in-current-category");
 					portletURL.setParameter("currentCategoryId", String.valueOf(categoryId));
 					%>
-	
+
 					<liferay-ui:icon
 						image="../aui/clock"
 						label="<%= true %>"

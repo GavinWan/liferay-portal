@@ -66,7 +66,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			boolean includeAnonymous, int start, int end)
 		throws PortalException, SystemException {
 		return getGroupThreads(groupId, userId,
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,status,
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, status,
 				subscribed, includeAnonymous, start, end);
 	}
 
@@ -173,7 +173,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	public int getGroupThreadsCount(
 			long groupId, long userId, long categoryId, int status,
-			boolean subscribed,boolean includeAnonymous)
+			boolean subscribed, boolean includeAnonymous)
 		throws SystemException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId) &&
