@@ -159,6 +159,18 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 				localizeTitle="<%= false %>"
 				title="<%= category.getName() %>"
 			/>
+
+			<%
+			portletURL.setParameter("topLink", "recent-posts-in-current-category");
+			portletURL.setParameter("currentCategoryId", String.valueOf(categoryId));
+			%>
+
+			<liferay-ui:icon
+				image="../aui/clock"
+				label="<%= true %>"
+				message="recent-posts-in-current-category"
+				url='<%= portletURL.toString() %>'
+			/>
 		</c:if>
 
 		<div class="displayStyle-<%= displayStyle %>">

@@ -47,23 +47,6 @@ portletURL.setParameter("struts_action", "/message_boards/view");
 				/>
 			</li>
 
-			<% if(category != null) { %>
-				<li class="top-link">
-
-					<%
-					portletURL.setParameter("topLink", "recent-posts-in-current-category");
-					portletURL.setParameter("currentCategoryId", String.valueOf(categoryId));
-					%>
-
-					<liferay-ui:icon
-						image="../aui/clock"
-						label="<%= true %>"
-						message="recent-posts-in-current-category"
-						url='<%= topLink.equals("recent-posts-in-current-category") ? StringPool.BLANK : portletURL.toString() %>'
-					/>
-				</li class="top-link">
-			<% } %>
-
 			<li class="top-link">
 
 				<%

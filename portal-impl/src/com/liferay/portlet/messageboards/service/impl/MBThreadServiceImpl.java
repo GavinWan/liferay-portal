@@ -65,9 +65,25 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			long groupId, long userId, int status, boolean subscribed,
 			boolean includeAnonymous, int start, int end)
 		throws PortalException, SystemException {
-		return getGroupThreads(groupId, userId,
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, status,
-				subscribed, includeAnonymous, start, end);
+		return getGroupThreads(
+				groupId, userId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				status, subscribed, includeAnonymous, start, end);
+	}
+
+	public List<MBThread> getGroupThreads(
+			long groupId, long userId, int status, boolean subscribed,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		return getGroupThreads(
+			groupId, userId, status, subscribed, true, start, end);
+	}
+
+	public List<MBThread> getGroupThreads(
+			long groupId, long userId, int status, int start, int end)
+		throws PortalException, SystemException {
+
+		return getGroupThreads(groupId, userId, status, false, start, end);
 	}
 
 	public List<MBThread> getGroupThreads(
@@ -76,7 +92,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId) &&
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID == categoryId) {
+				(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID
+						== categoryId)) {
 			return doGetGroupThreads(
 				groupId, userId, status, subscribed, includeAnonymous, start,
 				end);
@@ -132,22 +149,6 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		}
 	}
 
-	public List<MBThread> getGroupThreads(
-			long groupId, long userId, int status, boolean subscribed,
-			int start, int end)
-		throws PortalException, SystemException {
-
-		return getGroupThreads(
-			groupId, userId, status, subscribed, true, start, end);
-	}
-
-	public List<MBThread> getGroupThreads(
-			long groupId, long userId, int status, int start, int end)
-		throws PortalException, SystemException {
-
-		return getGroupThreads(groupId, userId, status, false, start, end);
-	}
-
 	public int getGroupThreadsCount(long groupId, long userId, int status)
 		throws SystemException {
 
@@ -177,7 +178,8 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		throws SystemException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId) &&
-				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID == categoryId) {
+				(MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID
+						== categoryId)) {
 			return doGetGroupThreadsCount(
 				groupId, userId, status, subscribed, includeAnonymous);
 		}

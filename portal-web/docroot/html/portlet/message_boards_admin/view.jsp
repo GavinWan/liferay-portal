@@ -29,20 +29,13 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/message_boards/view");
 portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter("mbCategoryId", String.valueOf(categoryId));
 
 request.setAttribute("view.jsp-viewCategory", Boolean.TRUE.toString());
-
-String names = "message-boards-home,recent-posts,statistics,banned-users";
-
-if (category != null) {
-	names = "message-boards-home,recent-posts-in-current-category,recent-posts,statistics,banned-users";
-	portletURL.setParameter("currentCategoryId", String.valueOf(categoryId));
-}
-
 %>
 
 <liferay-ui:tabs
-	names="<%= names %>"
+	names="message-boards-home,recent-posts,statistics,banned-users"
 	url="<%= portletURL.toString() %>"
 />
 
@@ -392,18 +385,9 @@ if (category != null) {
 		%>
 
 	</c:when>
-	<c:when test='<%= tabs1.equals("recent-posts") || tabs1.equals("recent-posts-in-current-category") %>'>
+	<c:when test='<%= tabs1.equals("recent-posts") %>'>
 
 		<%
-		String emptyResultsMessage = null;
-
-		if (tabs1.equals("recent-posts")) {
-			emptyResultsMessage = "there-are-no-recent-posts";
-		}
-		else if (tabs1.equals("recent-posts-in-current-category")) {
-			emptyResultsMessage = "there-are-no-recent-posts-in-current-category";
-		}
-
 		long groupThreadsUserId = ParamUtil.getLong(request, "groupThreadsUserId");
 
 		if (groupThreadsUserId > 0) {
@@ -423,7 +407,7 @@ if (category != null) {
 			<aui:input name="threadIds" type="hidden" />
 
 			<liferay-ui:search-container
-				emptyResultsMessage="<%= emptyResultsMessage %>"
+				emptyResultsMessage="there-are-no-recent-posts"
 				headerNames="thread,started-by,posts,views,last-post"
 				iteratorURL="<%= portletURL %>"
 				rowChecker="<%= new RowChecker(renderResponse) %>"
@@ -431,16 +415,8 @@ if (category != null) {
 				<liferay-ui:search-container-results>
 
 					<%
-
-					if (tabs1.equals("recent-posts")) {
-						results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, false, false, searchContainer.getStart(), searchContainer.getEnd());
-						total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, false, false);
-					}
-					else if (tabs1.equals("recent-posts-in-current-category")) {
-						long currentCategoryId = ParamUtil.getLong(request, "currentCategoryId");
-						results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, currentCategoryId, WorkflowConstants.STATUS_APPROVED, false, false, searchContainer.getStart(), searchContainer.getEnd());
-						total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, currentCategoryId, WorkflowConstants.STATUS_APPROVED, false, false);
-					}
+					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, false, false, searchContainer.getStart(), searchContainer.getEnd());
+					total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, false, false);
 
 					pageContext.setAttribute("results", results);
 					pageContext.setAttribute("total", total);
